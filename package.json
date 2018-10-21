@@ -1,0 +1,32 @@
+{
+  "name": "developers-contact-api",
+  "version": "1.0.0",
+  "description": "An api for developers contact directory",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon server/app.js",
+    "start": "node server/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mbonubasil/developers-contact-api.git"
+  },
+  "keywords": [
+    "API",
+    "node",
+    "express"
+  ],
+  "author": "Mbonu Basil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mbonubasil/developers-contact-api/issues"
+  },
+  "homepage": "https://github.com/mbonubasil/developers-contact-api#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
