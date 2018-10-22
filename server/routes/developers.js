@@ -30,7 +30,7 @@ router.post('/developers', (req, res) => {
         return res.status(400).send(error.details[0].message);
     }
 
-    const dev = new Developer({
+    const developer = new Developer({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         phoneNumber: req.body.phoneNumber,
@@ -38,8 +38,8 @@ router.post('/developers', (req, res) => {
         address: req.body.address
     });
 
-    dev.save();
-    res.status(201).send();
+    developer.save();
+    res.status(201).send(developer);
 });
 
 //remove a developer details
@@ -81,8 +81,8 @@ router.put('/developers/:id', (req, res) => {
         developer.save();
 
         res.send(developer);
-    })
-})
+    });
+});
 
 
 
