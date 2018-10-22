@@ -1,0 +1,203 @@
+{
+	"info": {
+		"name": "developer-contact-api-docs",
+		"_postman_id": "d927a68a-a7a4-46a1-9300-ad0c5a7b09da",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /api/v1/developers/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n\t\"firstName\": \"Steve\",\r\n    \"lastName\": \"Jobs\",\r\n    \"phoneNumber\": \"08030000078\",\r\n    \"gender\": \"Male\",\r\n    \"devType\": \"iOS\",\r\n    \"address\": \"NY\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/v1/developers/",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"developers",
+						""
+					]
+				},
+				"description": "This endpoint gets all developers contact details from the database."
+			},
+			"response": []
+		},
+		{
+			"name": "POST /api/v1/developers/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n\t\"firstName\": \"Scott\",\r\n    \"lastName\": \"Hahn\",\r\n    \"phoneNumber\": \"2303485993585\",\r\n    \"devType\": \"iOS\",\r\n    \"address\": \"United States\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/v1/developers/",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"developers",
+						""
+					]
+				},
+				"description": "This endpoint adds a new contact details to the database.\n\ne.g  \n\n\n{\n\t\"firstName\": \"Scott\",\n    \"lastName\": \"Hahn\",\n    \"phoneNumber\": \"2303485993585\",\n    \"devType\": \"iOS\",\n    \"address\": \"United States\"\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE  /api/v1/developers/5bcda4fe66b2710328d5ccbd",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n\t\"firstName\": \"Steve\",\r\n    \"lastName\": \"Jobs\",\r\n    \"phoneNumber\": \"08030000078\",\r\n   \r\n    \"devType\": \"iOS\",\r\n    \"address\": \"NY\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/v1/developers/5bcde6397f462424684bcb37",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"developers",
+						"5bcde6397f462424684bcb37"
+					]
+				},
+				"description": "Removes a contact by it's Id"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT  /api/v1/developers/5bcda4fe66b2710328d5ccbd",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n\t\r\n    \r\n    \"phoneNumber\": \"08030000078\",\r\n   \r\n    \"devType\": \"Frontend\",\r\n    \"address\": \"Nigeria\"\r\n}\r\n\r\n5bcde63b7f462424684bcb38"
+				},
+				"url": {
+					"raw": "localhost:3000/api/v1/developers/5bcde63b7f462424684bcb38",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"developers",
+						"5bcde63b7f462424684bcb38"
+					]
+				},
+				"description": "Updates a contact details\n\ne.g \n{\n    \"phoneNumber\": \"08030000078\",\n    \"devType\": \"Frontend\",\n    \"address\": \"Nigeria\"\n}\n"
+			},
+			"response": []
+		},
+		{
+			"name": "GET   /api/v1/developers/5bcda4fe66b2710328d5ccbd",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n\t\r\n    \r\n    \"phoneNumber\": \"08030000078\",\r\n   \r\n    \"devType\": \"Frontend\",\r\n    \"address\": \"Nigeria\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "localhost:3000/api/v1/developers/5bcde63b7f462424684bcb38",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"developers",
+						"5bcde63b7f462424684bcb38"
+					]
+				},
+				"description": "Get contact details by ID\n\nSample Response:\n\n{\n    \"_id\": \"5bcda4fe66b2710328d5ccbd\",\n    \"firstName\": \"Steve\",\n    \"lastName\": \"Jobs\",\n    \"phoneNumber\": \"08030000078\",\n    \"devType\": \"Frontend\",\n    \"address\": \"Nigeria\",\n    \"__v\": 0\n}\n"
+			},
+			"response": []
+		},
+		{
+			"name": "GET   /api/v1/category/?category=frontend",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n\t\r\n    \r\n    \"phoneNumber\": \"08030000078\",\r\n   \r\n    \"devType\": \"Frontend\",\r\n    \"address\": \"Nigeria\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "localhost:3000/api/v1/category/?category=FrontenD",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"category",
+						""
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "FrontenD",
+							"equals": true
+						}
+					]
+				},
+				"description": "Get contact details by category\n\nSample Response:\n\n{\n    \"_id\": \"5bcda4fe66b2710328d5ccbd\",\n    \"firstName\": \"Steve\",\n    \"lastName\": \"Jobs\",\n    \"phoneNumber\": \"08030000078\",\n    \"devType\": \"frontend\",\n    \"address\": \"Nigeria\",\n    \"__v\": 0\n}\n"
+			},
+			"response": []
+		}
+	]
+}
