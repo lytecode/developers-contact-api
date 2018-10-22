@@ -4,12 +4,12 @@ const Schema = mongoose.Schema;
 const developerSchema = new Schema({
     firstName: String,
     lastName: String,
-    phoneNumber: Number,
+    phoneNumber: String,
     gender: String,
     devType: String,
     address: String
 });
 
-const Developer = mongoose.model('Developer', developerSchema);
+const developer = mongoose.model('Developer', developerSchema);
 
-module.exports = Developer;
+module.exports = developer;
