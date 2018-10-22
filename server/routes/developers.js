@@ -42,14 +42,16 @@ router.post('/developers', (req, res) => {
     res.status(201).send(developer);
 });
 
+
 //remove a developer details
 router.delete('/developers/:id', (req, res) => {
-    Developer.findOneAndRemove({ _id: req.params.id }, (err) => {
+    Developer.findByIdAndRemove({ _id: req.params.id }, (err) => {
         if (err) {
+            console.log(error)
             return res.status(404).json();
         }
         else {
-            res.status(200);
+            res.status(200).send();
         }
     });
 });
