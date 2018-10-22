@@ -5,7 +5,10 @@ const router = express.Router();
 
 //Get All developers
 router.get('/developers', (req, res) => {
-    res.send('Hello dev api');
+    Developer.find((err, developers) => {
+        if (err) res.status(404).send({ message: 'No developer in the db' });
+        res.send(developers);
+    });
 });
 
 //Add a developer details
