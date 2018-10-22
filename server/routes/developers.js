@@ -24,6 +24,20 @@ router.post('/developers', (req, res) => {
 
     dev.save();
     res.status(201).send();
-})
+});
+
+//remove a developer details
+router.delete('/developers/:id', (req, res) => {
+    Developer.findOneAndRemove({ _id: req.params.id }, (err) => {
+        if (err) {
+            return res.status(404).json();
+        }
+        else {
+            res.status(200);
+        }
+    });
+});
+
+
 
 module.exports = router;
