@@ -7,8 +7,21 @@ const router = express.Router();
 //Get All developers
 router.get('/developers', (req, res) => {
     Developer.find((err, developers) => {
-        if (err) res.status(404).send({ message: 'No developer in the db' });
+        if (err) return res.status(404).send({ message: 'No developer in the db' });
+
         res.send(developers);
+    });
+});
+
+
+//Get a conatact by id
+router.get('/developers/:id', (req, res) => {
+    Developer.findById({ _id: req.params.id }, (err, developer) => {
+        if (err || !developer) return res.status(404).json({ message: 'No contact with the given id found' });
+
+
+        res.status(200).send(developer);
+
     });
 });
 
@@ -26,9 +39,8 @@ router.post('/developers', (req, res) => {
 
     const { error } = Joi.validate(req.body, Schema);
 
-    if (error) {
-        return res.status(400).send(error.details[0].message);
-    }
+    if (error) return res.status(400).send(error.details[0].message);
+
 
     const developer = new Developer({
         firstName: req.body.firstName,
@@ -46,13 +58,9 @@ router.post('/developers', (req, res) => {
 //remove a developer details
 router.delete('/developers/:id', (req, res) => {
     Developer.findByIdAndRemove({ _id: req.params.id }, (err) => {
-        if (err) {
-            console.log(error)
-            return res.status(404).json();
-        }
-        else {
-            res.status(200).send();
-        }
+        if (err) return res.status(404).json();
+
+        res.status(200).json();
     });
 });
 
@@ -60,7 +68,7 @@ router.delete('/developers/:id', (req, res) => {
 router.put('/developers/:id', (req, res) => {
     //update only address and devType
     Developer.findById({ _id: req.params.id }, (err, developer) => {
-        if (err) res.status(404).send('The contact with the given id does not exist');
+        if (err) return res.status(404).send('The contact with the given id does not exist');
 
         const updateSchema = Joi.object().keys({
             phoneNumber: Joi.string().min(11).max(14),
@@ -70,10 +78,7 @@ router.put('/developers/:id', (req, res) => {
 
         const { error } = Joi.validate(req.body, updateSchema);
 
-        if (error) {
-            return res.status(400).send(error.details[0].message);
-        }
-
+        if (error) return res.status(400).send(error.details[0].message);
 
         //update the contact details
         developer.phoneNumber = req.body.phoneNumber;
