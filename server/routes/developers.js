@@ -1,3 +1,4 @@
+const Joi = require('joi');
 const express = require('express');
 const db = require('../config/db');
 const Developer = require('../models/developer');
@@ -11,13 +12,28 @@ router.get('/developers', (req, res) => {
     });
 });
 
+
 //Add a developer details
 router.post('/developers', (req, res) => {
+
+    const Schema = Joi.object().keys({
+        firstName: Joi.string().min(3).required(),
+        lastName: Joi.string().min(3).required(),
+        phoneNumber: Joi.string().min(11).max(14).required(),
+        devType: Joi.string().required(),
+        address: Joi.string().required()
+    });
+
+    const { error } = Joi.validate(req.body, Schema);
+
+    if (error) {
+        return res.status(400).send(error.details[0].message);
+    }
+
     const dev = new Developer({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         phoneNumber: req.body.phoneNumber,
-        gender: req.body.gender,
         devType: req.body.devType,
         address: req.body.address
     });
@@ -37,6 +53,36 @@ router.delete('/developers/:id', (req, res) => {
         }
     });
 });
+
+//update a developer's details
+router.put('/developers/:id', (req, res) => {
+    //update only address and devType
+    Developer.findById({ _id: req.params.id }, (err, developer) => {
+        if (err) res.status(404).send('The contact with the given id does not exist');
+
+        const updateSchema = Joi.object().keys({
+            phoneNumber: Joi.string().min(11).max(14),
+            devType: Joi.string().required(),
+            address: Joi.string().required()
+        });
+
+        const { error } = Joi.validate(req.body, updateSchema);
+
+        if (error) {
+            return res.status(400).send(error.details[0].message);
+        }
+
+
+        //update the contact details
+        developer.phoneNumber = req.body.phoneNumber;
+        developer.address = req.body.address;
+        developer.devType = req.body.devType;
+
+        developer.save();
+
+        res.send(developer);
+    })
+})
 
 
 

@@ -5,7 +5,6 @@ const developerSchema = new Schema({
     firstName: String,
     lastName: String,
     phoneNumber: String,
-    gender: String,
     devType: String,
     address: String
 });
