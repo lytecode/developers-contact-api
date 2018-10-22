@@ -91,6 +91,19 @@ router.put('/developers/:id', (req, res) => {
     });
 });
 
+router.get('/category/', (req, res) => {
+
+    let category = req.query.category.toLowerCase().trim();
+
+    if (!category) return res.status(400).send('Bad Request');
+
+    Developer.find({ devType: category }, (err, developers) => {
+        if (err) return res.status(404).send('No developer found');
+
+        res.send(developers);
+    });
+});
+
 
 
 module.exports = router;
