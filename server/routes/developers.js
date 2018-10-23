@@ -59,7 +59,7 @@ router.post('/developers', (req, res) => {
 //remove a developer details
 router.delete('/developers/:id', (req, res) => {
     Developer.deleteOne({ _id: req.params.id }, (err, developer) => {
-        if (err) return res.status(404).json();
+        if (err) return res.status(404).json({ message: 'Contact not found' });
 
         res.status(200).json({ "message": 'Contact deleted successfully', developer });
     });
