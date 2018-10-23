@@ -39,7 +39,7 @@ router.post('/developers', (req, res) => {
 
     const { error } = Joi.validate(req.body, Schema);
 
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) return res.status(400).send({ message: error.details[0].message });
 
 
     const developer = new Developer({
@@ -60,15 +60,14 @@ router.delete('/developers/:id', (req, res) => {
     Developer.findByIdAndRemove({ _id: req.params.id }, (err) => {
         if (err) return res.status(404).json();
 
-        res.status(200).json();
+        res.status(200).json({ message: 'Contact deleted successfully' });
     });
 });
 
 //update a developer's details
 router.put('/developers/:id', (req, res) => {
-    //update only address and devType
     Developer.findById({ _id: req.params.id }, (err, developer) => {
-        if (err) return res.status(404).send('The contact with the given id does not exist');
+        if (err) return res.status(404).send({ message: 'The contact with the given id does not exist' });
 
         const Schema = Joi.object().keys({
             firstName: Joi.string().min(3).required(),
@@ -80,7 +79,7 @@ router.put('/developers/:id', (req, res) => {
 
         const { error } = Joi.validate(req.body, Schema);
 
-        if (error) return res.status(400).send(error.details[0].message);
+        if (error) return res.status(400).send({ message: error.details[0].message });
 
         //update the contact details
         developer.firstName = req.body.firstName;
@@ -99,10 +98,10 @@ router.get('/category/', (req, res) => {
 
     let category = req.query.category.toLowerCase().trim();
 
-    if (!category) return res.status(400).send('Bad Request');
+    if (!category) return res.status(400).send({ message: 'Bad Request' });
 
     Developer.find({ devType: category }, (err, developers) => {
-        if (err) return res.status(404).send('No developer found');
+        if (err) return res.status(404).send({ message: 'Error occurred' });
 
         res.send(developers);
     });
