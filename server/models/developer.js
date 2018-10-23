@@ -7,7 +7,9 @@ const developerSchema = new Schema({
     phoneNumber: String,
     devType: {
         type: String,
-        enum: ['frontend', 'backend']
+        lowercase: true,
+        trim: true,
+        required: true
     },
     address: String
 });
