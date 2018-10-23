@@ -7,9 +7,9 @@ const router = express.Router();
 //Get All developers
 router.get('/developers', (req, res) => {
     Developer.find((err, developers) => {
-        if (err) return res.status(404).send({ message: 'No developer in the db' });
+        if (err) return res.status(404).json({ message: 'No developer in the db' });
 
-        res.send(developers);
+        res.json({ developers });
     });
 });
 
@@ -20,7 +20,7 @@ router.get('/developers/:id', (req, res) => {
         if (err || !developer) return res.status(404).json({ message: 'No contact with the given id found' });
 
 
-        res.status(200).send(developer);
+        res.status(200).json({ developer });
 
     });
 });
@@ -39,7 +39,7 @@ router.post('/developers', (req, res) => {
 
     const { error } = Joi.validate(req.body, Schema);
 
-    if (error) return res.status(400).send({ message: error.details[0].message });
+    if (error) return res.status(400).json({ message: error.details[0].message });
 
 
     const developer = new Developer({
@@ -51,23 +51,24 @@ router.post('/developers', (req, res) => {
     });
 
     developer.save();
-    res.status(201).send(developer);
+    res.status(201)
+        .json({ message: "Contact successfully added!", developer });
 });
 
 
 //remove a developer details
 router.delete('/developers/:id', (req, res) => {
-    Developer.findByIdAndRemove({ _id: req.params.id }, (err) => {
+    Developer.deleteOne({ _id: req.params.id }, (err, developer) => {
         if (err) return res.status(404).json();
 
-        res.status(200).json({ message: 'Contact deleted successfully' });
+        res.status(200).json({ "message": 'Contact deleted successfully', developer });
     });
 });
 
 //update a developer's details
 router.put('/developers/:id', (req, res) => {
     Developer.findById({ _id: req.params.id }, (err, developer) => {
-        if (err) return res.status(404).send({ message: 'The contact with the given id does not exist' });
+        if (err) return res.status(404).json({ message: 'The contact with the given id does not exist' });
 
         const Schema = Joi.object().keys({
             firstName: Joi.string().min(3).required(),
@@ -79,7 +80,7 @@ router.put('/developers/:id', (req, res) => {
 
         const { error } = Joi.validate(req.body, Schema);
 
-        if (error) return res.status(400).send({ message: error.details[0].message });
+        if (error) return res.status(400).json({ message: error.details[0].message });
 
         //update the contact details
         developer.firstName = req.body.firstName;
@@ -90,7 +91,7 @@ router.put('/developers/:id', (req, res) => {
 
         developer.save();
 
-        res.send(developer);
+        res.json({ message: 'Contact updated successfully!', developer });
     });
 });
 
@@ -98,12 +99,12 @@ router.get('/category/', (req, res) => {
 
     let category = req.query.category.toLowerCase().trim();
 
-    if (!category) return res.status(400).send({ message: 'Bad Request' });
+    if (!category) return res.status(400).json({ message: 'Bad Request' });
 
     Developer.find({ devType: category }, (err, developers) => {
-        if (err) return res.status(404).send({ message: 'Error occurred' });
+        if (err) return res.status(404).json({ message: 'Error occurred' });
 
-        res.send(developers);
+        res.json({ developers });
     });
 });
 
