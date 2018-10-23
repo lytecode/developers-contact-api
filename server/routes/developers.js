@@ -70,17 +70,21 @@ router.put('/developers/:id', (req, res) => {
     Developer.findById({ _id: req.params.id }, (err, developer) => {
         if (err) return res.status(404).send('The contact with the given id does not exist');
 
-        const updateSchema = Joi.object().keys({
-            phoneNumber: Joi.string().min(11).max(14),
+        const Schema = Joi.object().keys({
+            firstName: Joi.string().min(3).required(),
+            lastName: Joi.string().min(3).required(),
+            phoneNumber: Joi.string().min(11).max(14).required(),
             devType: Joi.string().required(),
             address: Joi.string().required()
         });
 
-        const { error } = Joi.validate(req.body, updateSchema);
+        const { error } = Joi.validate(req.body, Schema);
 
         if (error) return res.status(400).send(error.details[0].message);
 
         //update the contact details
+        developer.firstName = req.body.firstName;
+        developer.lastName = req.body.lastName;
         developer.phoneNumber = req.body.phoneNumber;
         developer.address = req.body.address;
         developer.devType = req.body.devType;
