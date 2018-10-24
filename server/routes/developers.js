@@ -9,7 +9,7 @@ router.get('/developers', (req, res) => {
     Developer.find((err, developers) => {
         if (err) return res.status(404).json({ message: 'No developer in the db' });
 
-        res.json({ developers });
+        res.json(developers);
     });
 });
 
