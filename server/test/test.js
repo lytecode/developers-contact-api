@@ -211,28 +211,45 @@ describe('GET /category/?category', () => {
 });
 
 
-
 // Test for delete developer by id
 describe('DELETE /developers/:id', () => {
     it('it should not delete a developer if the given id is not found', (done) => {
-        chai.request(app)
-            .delete('/api/v1/developers/5bd02c97900000000000') //wrong id
-            .end((err, res) => {
-                res.should.have.status(404);
-                res.body.should.be.a('object');
-                res.body.should.have.property('message').a('string');
-                done();
-            });
+        let developer = new Developer({
+            "firstName": "Basil",
+            "lastName": "Mbonu",
+            "devType": "Backend",
+            "phoneNumber": "08138247755",
+            "address": "Lagos, Tokyo",
+        });
+        developer.save((err, developer) => {
+            chai.request(app)
+                .delete('/api/v1/developers/' + developer._id + 10) //wrong id
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('message').a('string');
+                    done();
+                });
+        });
     });
     it('it should delete a developer with a given id', (done) => {
-        chai.request(app)
-            .delete('/api/v1/developers/5bd0436ed64ddc09acaf92c1')
-            .end((err, res) => {
-                res.should.have.status(200);
-                res.body.should.be.a('object');
-                res.body.should.have.property('message').a('string');
-                done();
-            });
+        let developer = new Developer({
+            "firstName": "Tik",
+            "lastName": "Tak",
+            "devType": "ios",
+            "phoneNumber": "08138243455",
+            "address": "Accra, Ghana",
+        });
+        developer.save((err, developer) => {
+            chai.request(app)
+                .delete('/api/v1/developers/' + developer._id)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('message').a('string');
+                    done();
+                });
+        })
     });
 });
 
