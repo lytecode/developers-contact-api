@@ -103,7 +103,31 @@ describe('GET /developers', () => {
 });
 
 
-
+// Test for getting a particular developer
+describe('GET /developers/id', () => {
+    it('it should return a developer details by id', (done) => {
+        chai.request(app)
+            .get('/api/v1/developers/5bd02c979494a60bacd0ce27')
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.should.have.property('developer');
+                // res.body.should.have.property('data');
+                done();
+            });
+    });
+    it('it should return 404 if no developer is found', (done) => {
+        chai.request(app)
+            .get('/api/v1/developers/5bd02c979494a60bacd0ce97')
+            .end((err, res) => {
+                res.should.have.status(404);
+                res.body.should.be.a('object');
+                res.body.should.have.property('message');
+                res.body.should.have.property('message').eql("No contact with the given id found");
+                done();
+            });
+    });
+});
 
 
 
