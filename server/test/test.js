@@ -103,7 +103,7 @@ describe('GET /developers', () => {
 });
 
 
-// Test for getting a particular developer
+// Test for GET /developers/id getting a particular developer by id
 describe('GET /developers/id', () => {
     it('it should return a developer details by id', (done) => {
         chai.request(app)
@@ -112,7 +112,6 @@ describe('GET /developers/id', () => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 res.body.should.have.property('developer');
-                // res.body.should.have.property('data');
                 done();
             });
     });
@@ -128,6 +127,65 @@ describe('GET /developers/id', () => {
             });
     });
 });
+
+
+//Test for ( PUT /developers/id ) updating a developer contact details by id
+describe('PUT /developers/id', () => {
+    it('it should not update a developer without firstName, lastName, phoneNumber, devType or address field', (done) => {
+        chai.request(app)
+            .put('/api/v1/developers/5bd02c979494a60bacd0ce27')
+            .send({
+                "lastName": "Mbonu",
+                "devType": "frontend",
+                "phoneNumber": "08138247755",
+                "address": "Tokyo",
+            })
+            .end((err, res) => {
+                res.should.have.status(400);
+                res.body.should.be.a('object');
+                res.body.should.have.property('message');
+                done();
+            });
+    });
+    it('should not update a developer detail if the id cannot be found or is incorrect', (done) => {
+        chai.request(app)
+            .put('/api/v1/developers/5bd02c979494a60ba')
+            .send({
+                "firstName": "Basil",
+                "lastName": "Mbonu",
+                "devType": "Backend",
+                "phoneNumber": "08138247755",
+                "address": "Lagos, Nigeria",
+            })
+            .end((err, res) => {
+                res.should.have.status(404);
+                res.body.should.be.a('object');
+                res.body.should.have.property('message');
+                res.body.should.have.property('message').a('string');
+                done();
+            })
+    });
+    it('should update a developer detail if all field are available', (done) => {
+        chai.request(app)
+            .put('/api/v1/developers/5bd02c979494a60bacd0ce27')
+            .send({
+                "firstName": "Basil",
+                "lastName": "Mbonu",
+                "devType": "Backend",
+                "phoneNumber": "08138247755",
+                "address": "Lagos, Nigeria",
+            })
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.should.have.property('message');
+                res.body.should.have.property('developer');
+                done();
+            })
+    });
+});
+
+
 
 
 
