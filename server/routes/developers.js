@@ -9,7 +9,7 @@ router.get('/developers', (req, res) => {
     Developer.find((err, developers) => {
         if (err) return res.status(404).json({ message: 'No developer in the db' });
 
-        res.json(developers);
+        res.json({ developers });
     });
 });
 
@@ -39,7 +39,7 @@ router.post('/developers', (req, res) => {
 
     const { error } = Joi.validate(req.body, Schema);
 
-    if (error) return res.status(400).json({ message: error.details[0].message });
+    if (error) return res.status(400).send({ message: error.details[0].message });
 
 
     const developer = new Developer({
@@ -52,7 +52,7 @@ router.post('/developers', (req, res) => {
 
     developer.save();
     res.status(201)
-        .json({ message: "Contact successfully added!", developer });
+        .json({ message: "Developer successfully added!", developer });
 });
 
 
