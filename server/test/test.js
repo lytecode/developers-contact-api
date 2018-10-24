@@ -186,6 +186,32 @@ describe('PUT /developers/id', () => {
 });
 
 
+// Test for { GET /category/?category=backend } getting developers details by category
+describe('GET /category/?category', () => {
+    it('it should return empty developrs array if the category provided does not exist ', (done) => {
+        chai.request(app)
+            .get('/api/v1//category/?category=piano')
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.should.have.property('developers').a('array');
+                done();
+            });
+    });
+    it('it should return developer(s) detail if the category provided exist ', (done) => {
+        chai.request(app)
+            .get('/api/v1//category/?category=backend')
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.should.have.property('developers');
+                done();
+            });
+    });
+});
+
+
+
 // Test for delete developer by id
 describe('DELETE /developers/:id', () => {
     it('it should not delete a developer if the given id is not found', (done) => {
