@@ -46,7 +46,7 @@ describe('POST /developers', () => {
             "firstName": "Basil",
             "lastName": "Mbonu",
             "phoneNumber": "08138247755",
-            "address": "Tokyo",
+            "address": "Lagos",
         };
 
         chai.request(app)
@@ -66,7 +66,7 @@ describe('POST /developers', () => {
             "lastName": "Mbonu",
             "devType": "fullstack",
             "phoneNumber": "08138247755",
-            "address": "Tokyo",
+            "address": "Lagos",
         };
 
         chai.request(app)
@@ -104,10 +104,10 @@ describe('GET /developers', () => {
 
 
 // Test for GET /developers/id getting a particular developer by id
-describe('GET /developers/id', () => {
+describe('GET /developers/:id', () => {
     it('it should return a developer details by id', (done) => {
         chai.request(app)
-            .get('/api/v1/developers/5bd02c979494a60bacd0ce27')
+            .get('/api/v1/developers/5bd0436ed64ddc09acaf92c1')
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
@@ -117,7 +117,7 @@ describe('GET /developers/id', () => {
     });
     it('it should return 404 if no developer is found', (done) => {
         chai.request(app)
-            .get('/api/v1/developers/5bd02c979494a60bacd0ce97')
+            .get('/api/v1/developers/5bd02c979494a60bacd0ce97') //wrong id
             .end((err, res) => {
                 res.should.have.status(404);
                 res.body.should.be.a('object');
@@ -133,7 +133,7 @@ describe('GET /developers/id', () => {
 describe('PUT /developers/id', () => {
     it('it should not update a developer without firstName, lastName, phoneNumber, devType or address field', (done) => {
         chai.request(app)
-            .put('/api/v1/developers/5bd02c979494a60bacd0ce27')
+            .put('/api/v1/developers/5bd0436ed64ddc09acaf92c1')
             .send({
                 "lastName": "Mbonu",
                 "devType": "frontend",
@@ -167,7 +167,7 @@ describe('PUT /developers/id', () => {
     });
     it('should update a developer detail if all field are available', (done) => {
         chai.request(app)
-            .put('/api/v1/developers/5bd02c979494a60bacd0ce27')
+            .put('/api/v1/developers/5bd0436ed64ddc09acaf92c1')
             .send({
                 "firstName": "Basil",
                 "lastName": "Mbonu",
@@ -186,6 +186,29 @@ describe('PUT /developers/id', () => {
 });
 
 
+// Test for delete developer by id
+describe('DELETE /developers/:id', () => {
+    it('it should not delete a developer if the given id is not found', (done) => {
+        chai.request(app)
+            .delete('/api/v1/developers/5bd02c97900000000000') //wrong id
+            .end((err, res) => {
+                res.should.have.status(404);
+                res.body.should.be.a('object');
+                res.body.should.have.property('message').a('string');
+                done();
+            });
+    });
+    it('it should delete a developer with a given id', (done) => {
+        chai.request(app)
+            .delete('/api/v1/developers/5bd0436ed64ddc09acaf92c1')
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.should.have.property('message').a('string');
+                done();
+            });
+    });
+});
 
 
 
